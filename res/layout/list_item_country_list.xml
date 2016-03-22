@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/item_country_tv_letter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="36dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:clickable="false"/>
+
+    <RelativeLayout 
+        android:id="@+id/item_country_ll"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+         android:background="?android:attr/selectableItemBackground"
+        >
+        <TextView
+            android:id="@+id/item_country_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:textColor="@color/gray_dark"
+            android:textSize="16dp" />
+        <TextView
+            android:id="@+id/item_country_tv_code"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="36dp"
+            android:textColor="@color/gray_dark"
+            android:layout_alignParentRight="true"
+            android:textStyle="bold"
+            android:textSize="16dp" />
+
+    </RelativeLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="36dp"
+        android:background="#E5E5E5"/>
+</LinearLayout>
