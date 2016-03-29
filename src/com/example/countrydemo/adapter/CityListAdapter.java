@@ -40,10 +40,10 @@ public class CityListAdapter extends BaseAdapter {
 		for (int index = 0; index < size; index++) {
 			// 当前城市拼音首字母
 			String currentLetter = getFirstLetter(mCities.get(index)
-					.getInitials());
+					.getPinyin().substring(0, 1));
 			// 上个首字母，如果不存在设为""
 			String previousLetter = index >= 1 ? getFirstLetter(mCities.get(
-					index - 1).getInitials()) : "";
+					index - 1).getPinyin().substring(0,1)) : "";
 			if (!TextUtils.equals(currentLetter, previousLetter)) {
 				letterIndexes.put(currentLetter, index);
 				sections[index] = currentLetter;
@@ -111,9 +111,9 @@ public class CityListAdapter extends BaseAdapter {
 		holder.nameTv.setText(countryName);
 		holder.codeTv.setText("+"+code);
 		
-		String currentLetter = getFirstLetter(country.getInitials());
+		String currentLetter = getFirstLetter(country.getPinyin());
 		String previousLetter = position >= 1 ? getFirstLetter(mCities.get(
-				position - 1).getInitials()) : "";
+				position - 1).getPinyin()) : "";
 		if (!TextUtils.equals(currentLetter, previousLetter)) {
 			holder.letterTv.setVisibility(View.VISIBLE);
 			holder.letterTv.setText(currentLetter);

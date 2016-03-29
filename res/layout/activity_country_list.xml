@@ -4,6 +4,39 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+       <RelativeLayout
+        android:id="@+id/rl_verifiy_phone_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/black"
+        android:gravity="center_vertical" >
+
+        <LinearLayout
+            android:id="@+id/ll_verifiy_phone_cancle"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_verifiy_phone_header_topic"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:text="选择国家或者地区"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+    </RelativeLayout>
+    
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -23,6 +56,7 @@
             android:singleLine="true"
             android:textColor="@color/black"
             android:textColorHint="@color/sdl_text_secondary"
+            android:imeOptions="actionSearch"
             android:textSize="14sp" />
 
         <ImageView
@@ -83,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:text="没有找到搜索结果~"
-                android:textColor="@color/gray"
+                android:textColor="@color/red"
                 android:textSize="16sp" />
         </LinearLayout>
     </RelativeLayout>

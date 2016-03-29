@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+
 /**
  */
 public class DBCountryManager {
@@ -25,7 +26,9 @@ public class DBCountryManager {
 
 	private static final String CODE = "code";
 	private static final String COUNTRY = "country";
-	private static final String INITIALS = "initials";
+	
+	private static final String PINYIN = "pinyin";
+	private static final String SHORT_PINYIN = "shortPinyin";
 
 	private static final int BUFFER_SIZE = 1024;
 	private String DB_PATH;
@@ -68,8 +71,7 @@ public class DBCountryManager {
 	}
 
 	/**
-	 * 读取所有城市
-	 * 
+	 * 读取所有国家
 	 * @return
 	 */
 	public List<Country> getAllCountry() {
@@ -81,8 +83,9 @@ public class DBCountryManager {
 		while (cursor.moveToNext()) {
 			String code = cursor.getString(cursor.getColumnIndex(CODE));
 			String countryName = cursor.getString(cursor.getColumnIndex(COUNTRY));
-			String initials = cursor.getString(cursor.getColumnIndex(INITIALS));
-			country = new Country(code, countryName,initials);
+			String pinyin = cursor.getString(cursor.getColumnIndex(PINYIN));
+			String shortPinyin = cursor.getString(cursor.getColumnIndex(SHORT_PINYIN));
+			country = new Country(code, countryName, pinyin, shortPinyin);
 			result.add(country);
 		}
 		cursor.close();
@@ -92,8 +95,7 @@ public class DBCountryManager {
 	}
 
 	/**
-	 * 通过名字或者拼音搜索
-	 * 
+	 * 通过名字或者拼音搜索。或者区号，或者拼音缩写。
 	 * @param keyword
 	 * @return
 	 */
@@ -104,19 +106,20 @@ public class DBCountryManager {
 		sb.append("select * from ").append(TABLE_NAME);
 		sb.append(" where ").append(CODE).append(" like \"%").append(keyword).append("%\"");
 		sb.append(" or ").append(COUNTRY).append(" like \"%").append(keyword).append("%\"");
+		sb.append(" or ").append(PINYIN).append(" like \"").append(keyword).append("%\"");
+		sb.append(" or ").append(SHORT_PINYIN).append(" like \"").append(keyword).append("%\"");
 		String sql = sb.toString();
-		/*
-		Cursor cursor = db.rawQuery("select * from " + TABLE_NAME + " where "
-				+ CODE + " like \"%" + keyword + "%\" or " + COUNTRY
-				+ " like \"%" + keyword + "%\"", null);*/
+	
+		
 		Cursor cursor = db.rawQuery(sql, null);
 		List<Country> result = new ArrayList<Country>();
 		Country country;
 		while (cursor.moveToNext()) {
 			String code = cursor.getString(cursor.getColumnIndex(CODE));
 			String countryName = cursor.getString(cursor.getColumnIndex(COUNTRY));
-			String initials = cursor.getString(cursor.getColumnIndex(INITIALS));
-			country = new Country(code, countryName,initials);
+			String pinyin = cursor.getString(cursor.getColumnIndex(PINYIN));
+			String shortPinyin = cursor.getString(cursor.getColumnIndex(SHORT_PINYIN));
+			country = new Country(code, countryName, pinyin, shortPinyin);
 			result.add(country);
 		}
 		cursor.close();
@@ -131,8 +134,8 @@ public class DBCountryManager {
 	private class CityComparator implements Comparator<Country> {
 		@Override
 		public int compare(Country lhs, Country rhs) {
-			String a = lhs.getInitials().substring(0, 1);
-			String b = rhs.getInitials().substring(0, 1);
+			String a = lhs.getPinyin().substring(0, 1);
+			String b = rhs.getPinyin().substring(0, 1);
 			return a.compareTo(b);
 		}
 	}
@@ -145,15 +148,42 @@ public class DBCountryManager {
 		public String id;
 		public String code;
 		public String country;
-		public String initials;
+		
+		public String pinyin;
+		public String shortPinyin;
 
 		public Country() {
+			
 		}
 
-		public Country(String code, String country,String initials) {
+		public Country(String code, String country) {
 			this.code = code;
 			this.country = country;
-			this.initials = initials;
+//			this.initials = initials;
+		}
+
+		public Country(String code, String country, String pinyin,
+				String shortPinyin) {
+			this.code = code;
+			this.country = country;
+			this.pinyin = pinyin;
+			this.shortPinyin = shortPinyin;
+		}
+
+		public String getPinyin() {
+			return pinyin;
+		}
+
+		public void setPinyin(String pinyin) {
+			this.pinyin = pinyin;
+		}
+
+		public String getShortPinyin() {
+			return shortPinyin;
+		}
+
+		public void setShortPinyin(String shortPinyin) {
+			this.shortPinyin = shortPinyin;
 		}
 
 		public String getId() {
@@ -178,14 +208,6 @@ public class DBCountryManager {
 
 		public void setCountry(String country) {
 			this.country = country;
-		}
-
-		public String getInitials() {
-			return initials;
-		}
-
-		public void setInitials(String initials) {
-			this.initials = initials;
 		}
 
 	}

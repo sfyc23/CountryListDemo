@@ -101,21 +101,21 @@ public class CountryListActivity extends FragmentActivity implements
 					clearBtn.setVisibility(View.GONE);
 					emptyView.setVisibility(View.GONE);
 					
+					mListView.setVisibility(View.VISIBLE);
 					List<Country> result = dbManager.getAllCountry();
 					mCityAdapter.updateCountry(result);
 				} else {
-//					clearBtn.setVisibility(View.VISIBLE);
-//					mResultListView.setVisibility(View.VISIBLE);
 					List<Country> result = dbManager.searchCountry(keyword);
+					if (result == null || result.isEmpty()) {
+//						mCityAdapter.updateCountry(result);
+						emptyView.setVisibility(View.VISIBLE);
+						mListView.setVisibility(View.GONE);
+					} else {
+						emptyView.setVisibility(View.GONE);
+						mListView.setVisibility(View.VISIBLE);
+						mCityAdapter.updateCountry(result);
+					}
 					
-					mCityAdapter.updateCountry(result);
-					
-//					if (result == null || result.size() == 0) {
-//						emptyView.setVisibility(View.VISIBLE);
-//					} else {
-//						emptyView.setVisibility(View.GONE);
-//						mResultAdapter.changeData(result);
-//					}
 				}
 			}
 		});
